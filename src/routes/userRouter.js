@@ -7,6 +7,6 @@ userRouter.get('/', userController.getUsers);
 
 userRouter.post('/', userController.createUser);
 
-userRouter.put('/', userController.editUser);
+userRouter.put('/:id', userController.editUser);
 
 module.exports = userRouter;
