@@ -1,10 +1,9 @@
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const userService = require('../services/userService');
 
-const getUsers = async (req, res, _next) => {
+const getUsers = async (_req, res, _next) => {
   try {
-    const { displayName, email, password, image } = req.body;
-    const users = await userService.getUsers(displayName, email, password, image);
+    const users = await userService.getUsers();
     return res.status(StatusCodes.OK).json(users);
   } catch (error) {
     console.log(`Error: ${error}`);
