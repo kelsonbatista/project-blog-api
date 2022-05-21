@@ -5,6 +5,12 @@ const getUsers = async () => {
   return users;
 };
 
+const createUser = async (displayName, email, password, image) => {
+  const users = await User.create({ displayName, email, password, image });
+  return users;
+};
+
 module.exports = {
   getUsers,
+  createUser,
 };
