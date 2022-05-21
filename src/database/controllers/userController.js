@@ -12,6 +12,19 @@ const getUsers = async (_req, res, _next) => {
   }
 };
 
+const createUser = async (req, res, _next) => {
+  try {
+    const { displayName, email, password, image } = req.body;
+    const user = await userService.createUser(displayName, email, password, image);
+    return res.status(StatusCodes.OK).json(user);
+  } catch (error) {
+    console.log(`Error: ${error}`);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+  }
+};
+
 module.exports = {
   getUsers,
+  createUser,
 };
