@@ -24,7 +24,21 @@ const createUser = async (req, res, _next) => {
   }
 };
 
+const editUser = async (req, res, _next) => {
+  try {
+    const { id } = req.params;
+    const userInfo = req.body;
+    const user = await userService.editUser(id, userInfo);
+    return res.status(StatusCodes.OK).json(user);
+  } catch (error) {
+    console.log(`Error: ${error}`);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+  }
+};
+
 module.exports = {
   getUsers,
   createUser,
+  editUser,
 };
