@@ -10,7 +10,13 @@ const createUser = async (displayName, email, password, image) => {
   return users;
 };
 
+const editUser = async (id, userInfo) => {
+  const user = await User.update({ id, ...userInfo });
+  return user;
+};
+
 module.exports = {
   getUsers,
   createUser,
+  editUser,
 };
