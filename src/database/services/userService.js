@@ -11,7 +11,7 @@ const createUser = async (displayName, email, password, image) => {
 };
 
 const editUser = async (id, userInfo) => {
-  const user = await User.update({ id, ...userInfo });
+  const user = await User.update({ id, ...userInfo }, { where: { id } });
   return user;
 };
 
