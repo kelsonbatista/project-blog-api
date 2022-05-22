@@ -1,5 +1,6 @@
 require('dotenv').config();
 const router = require('./routes');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 const app = require('./api');
 
 // não remova a variável `API_PORT` ou o `listen`
@@ -11,5 +12,6 @@ app.get('/', (_request, response) => {
 });
 
 app.use(router);
+app.use(errorMiddleware);
 
 app.listen(port, () => console.log('ouvindo porta', port));
