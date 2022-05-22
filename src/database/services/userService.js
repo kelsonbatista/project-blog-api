@@ -5,6 +5,11 @@ const getUsers = async () => {
   return users;
 };
 
+const getUserEmail = async (email) => {
+  const userEmail = await User.findOne({ where: { email } });
+  return userEmail;
+};
+
 const createUser = async (displayName, email, password, image) => {
   const users = await User.create({ displayName, email, password, image });
   return users;
@@ -22,6 +27,7 @@ const deleteUser = async (id) => {
 
 module.exports = {
   getUsers,
+  getUserEmail,
   createUser,
   editUser,
   deleteUser,
