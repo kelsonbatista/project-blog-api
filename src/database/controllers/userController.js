@@ -1,30 +1,28 @@
-const { StatusCodes, ReasonPhrases } = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const userService = require('../services/userService');
 
-const getUsers = async (_req, res, _next) => {
+const getUsers = async (_req, res, next) => {
   try {
     const users = await userService.getUsers();
     return res.status(StatusCodes.OK).json(users);
   } catch (error) {
     console.log(`Error: ${error}`);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+    next(error);
   }
 };
 
-const createUser = async (req, res, _next) => {
+const createUser = async (req, res, next) => {
   try {
     const { displayName, email, password, image } = req.body;
     const user = await userService.createUser(displayName, email, password, image);
-    return res.status(StatusCodes.OK).json(user);
+    return res.status(StatusCodes.CREATED).json(user);
   } catch (error) {
     console.log(`Error: ${error}`);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+    next(error);
   }
 };
 
-const editUser = async (req, res, _next) => {
+const editUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const userInfo = req.body;
@@ -32,20 +30,18 @@ const editUser = async (req, res, _next) => {
     return res.status(StatusCodes.OK).json(user);
   } catch (error) {
     console.log(`Error: ${error}`);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+    next(error);
   }
 };
 
-const deleteUser = async (req, res, _next) => {
+const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await userService.deleteUser(id);
     return res.status(StatusCodes.OK).json(user);
   } catch (error) {
     console.log(`Error: ${error}`);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: ReasonPhrases.INTERNAL_SERVER_ERROR });
+    next(error);
   }
 };
 
