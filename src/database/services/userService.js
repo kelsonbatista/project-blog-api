@@ -1,8 +1,18 @@
+const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
 const getUsers = async () => {
   const users = await User.findAll();
   return users;
+};
+
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+  if (user === null) {
+    const error = { status: StatusCodes.NOT_FOUND, message: 'User does not exist' };
+    throw error;
+  }
+  return user;
 };
 
 const getUserEmail = async (email) => {
@@ -27,6 +37,7 @@ const deleteUser = async (id) => {
 
 module.exports = {
   getUsers,
+  getUserById,
   getUserEmail,
   createUser,
   editUser,
