@@ -20,7 +20,8 @@ const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await userService.getUserById(id);
-    return res.status(StatusCodes.OK).json(user);
+    const { password: passDB, ...userInfo } = user.dataValues;
+    return res.status(StatusCodes.OK).json(userInfo);
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
