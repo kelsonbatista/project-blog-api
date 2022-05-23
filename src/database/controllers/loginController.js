@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
-const { checkEmailPassword, getToken } = require('../services/loginService');
+const { checkEmailPassword } = require('../services/loginService');
+const { getToken } = require('../../utils/handleToken');
 
 const doLogin = async (req, res, next) => {
   try {
