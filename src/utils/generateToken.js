@@ -5,7 +5,7 @@ const secret = process.env.JWT_SECRET;
 // JWT = HEADER + PAYLOAD(BODY OU DIRETO DO BANCO) + SECRET
 // CONFIG DO HEADER
 const headersConfig = {
-  expiresIn: '2m',
+  expiresIn: '1h',
   algorithm: 'HS256',
 };
 
