@@ -4,6 +4,6 @@ const loginController = require('../database/controllers/loginController');
 
 const loginRouter = express.Router();
 
-loginRouter.get('/', validateLogin, loginController);
+loginRouter.post('/', validateLogin, loginController);
 
 module.exports = loginRouter;
