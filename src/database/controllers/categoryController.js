@@ -14,8 +14,11 @@ const getCategories = async (_req, res, next) => {
 const createCategory = async (req, res, next) => {
   try {
     const { name } = req.body;
+    if (!name) {
+      return next({ status: StatusCodes.BAD_REQUEST, message: '"name" is required' });
+    }
     const category = await categoryService.createCategory(name);
-    return res.status(StatusCodes.OK).json(category);
+    return res.status(StatusCodes.CREATED).json(category);
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
