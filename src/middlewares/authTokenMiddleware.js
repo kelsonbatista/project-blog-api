@@ -11,14 +11,15 @@ const authToken = async (req, _res, next) => {
   // se o usuario nao existe, retorna erro, caso contrario segue o middleware
   try {
     const token = req.headers.authorization;
-    if (!token) next({ status: StatusCodes.UNAUTHORIZED, message: 'Token not found' });
+    if (!token) return next({ status: StatusCodes.UNAUTHORIZED, message: 'Token not found' });
     const decoded = jwt.verify(token, secret);
+    // Expired or invalid token
     const userIsValid = await getUserEmail(decoded.data.email);
-    if (!userIsValid) next({ status: StatusCodes.NOT_FOUND, message: 'User not found' });
+    if (!userIsValid) return next({ status: StatusCodes.NOT_FOUND, message: 'User not found' });
     next();
   } catch (error) {
     console.log(`Error: ${error}`);
-    next(error);
+    next({ status: StatusCodes.UNAUTHORIZED, message: 'Expired or invalid token' });
   }
 };
 
