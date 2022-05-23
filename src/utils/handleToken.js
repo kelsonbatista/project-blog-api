@@ -14,4 +14,12 @@ const generateToken = (payload) => {
   return token;
 };
 
-module.exports = generateToken;
+const getToken = async (userPayload) => {
+  const token = await generateToken(userPayload);
+  return token;
+};
+
+module.exports = {
+  getToken,
+  generateToken,
+};
