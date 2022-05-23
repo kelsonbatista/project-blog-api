@@ -5,7 +5,11 @@ const { getToken } = require('../../utils/handleToken');
 const getUsers = async (_req, res, next) => {
   try {
     const users = await userService.getUsers();
-    return res.status(StatusCodes.OK).json(users);
+    const newUser = users.map((user) => {
+      const { password: passDB, ...userInfo } = user.dataValues;
+      return userInfo;
+    });
+    return res.status(StatusCodes.OK).json(newUser);
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
