@@ -10,7 +10,7 @@ const validateLogin = async (req, _res, next) => {
   const { email, password } = req.body;
   const { error } = loginSchema.validate({ email, password });
   const status = StatusCodes.BAD_REQUEST;
-  if (error) next({ status, message: 'Some required fields are missing' });  
+  if (error) return next({ status, message: 'Some required fields are missing' });  
   next();
 };
 
