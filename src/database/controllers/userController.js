@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const userService = require('../services/userService');
+const { getToken } = require('../../utils/handleToken');
 
 const getUsers = async (_req, res, next) => {
   try {
@@ -25,8 +26,9 @@ const getUserById = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const { displayName, email, password, image } = req.body;
-    const user = await userService.createUser(displayName, email, password, image);
-    return res.status(StatusCodes.CREATED).json(user);
+    await userService.createUser(displayName, email, password, image);
+    const token = await getToken({ displayName, email, image });
+    return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
