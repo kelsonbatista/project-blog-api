@@ -23,7 +23,16 @@ const getBlogPosts = async () => {
 };
 
 const getBlogPostById = async (id) => {
-  const blogPost = await BlogPost.findByPk(id);
+  const blogPost = await BlogPost.findByPk(id, {
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  if (!blogPost) {
+    const error = { status: StatusCodes.NOT_FOUND, message: 'Post does not exist' };
+    throw error;
+  }
   return blogPost;
 };
 
