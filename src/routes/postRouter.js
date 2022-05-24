@@ -1,17 +1,17 @@
 const express = require('express');
-const postController = require('../database/controllers/postController');
+const blogPostController = require('../database/controllers/blogPostController');
 const authToken = require('../middlewares/authTokenMiddleware');
 
 const postRouter = express.Router();
 
-postRouter.get('/', authToken, postController.getPosts);
+postRouter.get('/', authToken, blogPostController.getBlogPosts);
 
-postRouter.get('/:id', authToken, postController.getPostById);
+postRouter.get('/:id', authToken, blogPostController.getBlogPostById);
 
-postRouter.post('/', postController.createPost);
+postRouter.post('/', authToken, blogPostController.createBlogPost);
 
-postRouter.put('/:id', postController.editPost);
+postRouter.put('/:id', authToken, blogPostController.editBlogPost);
 
-postRouter.delete('/:id', postController.deletePost);
+postRouter.delete('/:id', authToken, blogPostController.deleteBlogPost);
 
 module.exports = postRouter;
