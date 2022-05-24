@@ -14,7 +14,8 @@ const getBlogPostById = async (id) => {
 const checkCategory = async (categoryIds) => {
   const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
   if (count < categoryIds.length) {
-    throw new Error({ status: StatusCodes.BAD_REQUEST, message: '"categoryIds" not found' });
+    const error = { status: StatusCodes.BAD_REQUEST, message: '"categoryIds" not found' };
+    throw error;
   }
 };
 
@@ -25,8 +26,6 @@ const createBlogPost = async (userId, reqBody) => {
     title,
     content,
     userId,
-    published: new Date(),
-    updated: new Date(),
   });
   blogPost.addCategories(categoryIds);
   return blogPost;
