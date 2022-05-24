@@ -26,7 +26,7 @@ const createBlogPost = async (req, res, next) => {
   try {
     const userId = req.user.dataValues.id;
     const blogPost = await blogPostService.createBlogPost(userId, req.body);
-    return res.status(StatusCodes.OK).json(blogPost);
+    return res.status(StatusCodes.CREATED).json(blogPost);
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
