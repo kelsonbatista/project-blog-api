@@ -3,7 +3,7 @@ const blogPostService = require('../services/blogPostService');
 
 const getBlogPosts = async (_req, res, next) => {
   try {
-    const blogPost = await blogPostService.getPosts();
+    const blogPost = await blogPostService.getBlogPosts();
     return res.status(StatusCodes.OK).json(blogPost);
   } catch (error) {
     console.log(`Error: ${error}`);
@@ -14,7 +14,7 @@ const getBlogPosts = async (_req, res, next) => {
 const getBlogPostById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const blogPost = await blogPostService.getPostById(id);
+    const blogPost = await blogPostService.getBlogPostById(id);
     return res.status(StatusCodes.OK).json(blogPost);
   } catch (error) {
     console.log(`Error: ${error}`);
@@ -37,7 +37,7 @@ const editBlogPost = async (req, res, next) => {
   try {
     const { id } = req.params;
     const blogPost = req.body;
-    const user = await blogPostService.editPost(id, blogPost);
+    const user = await blogPostService.editBlogPost(id, blogPost);
     return res.status(StatusCodes.OK).json(user);
   } catch (error) {
     console.log(`Error: ${error}`);
@@ -48,7 +48,7 @@ const editBlogPost = async (req, res, next) => {
 const deleteBlogPost = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const blogPost = await blogPostService.deletePost(id);
+    const blogPost = await blogPostService.deleteBlogPost(id);
     return res.status(StatusCodes.OK).json(blogPost);
   } catch (error) {
     console.log(`Error: ${error}`);
