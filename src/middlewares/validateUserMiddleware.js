@@ -1,14 +1,8 @@
-const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 const { getUserEmail } = require('../database/services/userService');
+const userSchema = require('../schemas/userSchema');
 
 const validateUser = async (req, _res, next) => {
-  const userSchema = Joi.object({
-    displayName: Joi.string().required().min(8),
-    email: Joi.string().required().lowercase().email(),
-    password: Joi.string().required().min(6),
-  });
-
   const { displayName, email, password } = req.body;
   const { error } = userSchema.validate({ displayName, email, password });
   const status = StatusCodes.BAD_REQUEST;
