@@ -1,8 +1,24 @@
 const { StatusCodes } = require('http-status-codes');
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const getBlogPosts = async () => {
-  const blogPost = await BlogPost.findAll();
+  const blogPost = await BlogPost.findAll(
+    {
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: {
+          attributes: [], // coloca as chaves que QUER mostrar
+        },
+        // attributes: { exclude: ['PostCategory'] },
+      }],
+    },
+  );
   return blogPost;
 };
 
