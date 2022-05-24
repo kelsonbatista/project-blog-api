@@ -20,11 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     published: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: new Date()
     },
     updated: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: new Date()
     }
   }, {
     timestamps: false,
