@@ -13,9 +13,9 @@ const authToken = async (req, _res, next) => {
     const token = req.headers.authorization;
     if (!token) return next({ status: StatusCodes.UNAUTHORIZED, message: 'Token not found' });
     const decoded = jwt.verify(token, secret);
-    // Expired or invalid token
-    const userIsValid = await getUserEmail(decoded.data.email);
-    if (!userIsValid) return next({ status: StatusCodes.NOT_FOUND, message: 'User not found' });
+    const user = await getUserEmail(decoded.data.email);
+    req.user = user;
+    if (!user) return next({ status: StatusCodes.NOT_FOUND, message: 'User not found' });
     next();
   } catch (error) {
     console.log(`Error: ${error}`);
