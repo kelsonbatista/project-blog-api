@@ -5,6 +5,8 @@ const { validatePost } = require('../middlewares/validatePostMiddleware');
 
 const postRouter = express.Router();
 
+postRouter.get('/search', authToken, blogPostController.searchPost);
+
 postRouter.get('/', authToken, blogPostController.getBlogPosts);
 
 postRouter.get('/:id', authToken, blogPostController.getBlogPostById);
