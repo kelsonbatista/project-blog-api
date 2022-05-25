@@ -11,8 +11,8 @@ userRouter.get('/:id', authToken, userController.getUserById);
 
 userRouter.post('/', validateUser, userController.createUser);
 
-userRouter.put('/:id', userController.editUser);
+userRouter.put('/:id', authToken, userController.editUser);
 
-userRouter.delete('/:id', userController.deleteUser);
+userRouter.delete('/:id', authToken, userController.deleteUser);
 
 module.exports = userRouter;
