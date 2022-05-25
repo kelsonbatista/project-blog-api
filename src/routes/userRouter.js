@@ -15,4 +15,6 @@ userRouter.put('/:id', authToken, userController.editUser);
 
 userRouter.delete('/:id', authToken, userController.deleteUser);
 
+userRouter.delete('/me', authToken, userController.deleteUser);
+
 module.exports = userRouter;
