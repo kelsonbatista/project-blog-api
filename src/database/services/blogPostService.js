@@ -56,9 +56,23 @@ const createBlogPost = async (userId, reqBody) => {
   return blogPost;
 };
 
-const editBlogPost = async (id, postInfo) => {
-  const blogPost = await BlogPost.update({ id, ...postInfo }, { where: { id } });
-  return blogPost;
+const editBlogPost = async (id, postInfo, userInfo) => {
+  const post = await getBlogPostById(id);
+  const currentUser = userInfo.dataValues.id;
+  const { title, content } = postInfo;
+  if (!title || !content) {
+    const error = { status: StatusCodes.BAD_REQUEST, message: 'Some required fields are missing' };
+    throw error;
+  }
+  const postUser = post.user.id;
+  if (currentUser !== postUser) {
+    const error = { status: StatusCodes.UNAUTHORIZED, message: 'Unauthorized user' };
+    throw error;
+  }
+  const updated = new Date();
+  await BlogPost.update({ ...postInfo, updated }, { where: { id } });
+  const newPost = await getBlogPostById(id);
+  return newPost.dataValues;
 };
 
 const deleteBlogPost = async (id) => {
