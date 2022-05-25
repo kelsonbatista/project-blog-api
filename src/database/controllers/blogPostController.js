@@ -49,8 +49,9 @@ const editBlogPost = async (req, res, next) => {
 const deleteBlogPost = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const blogPost = await blogPostService.deleteBlogPost(id);
-    return res.status(StatusCodes.OK).json(blogPost);
+    const userInfo = req.user;
+    await blogPostService.deleteBlogPost(id, userInfo);
+    return res.status(StatusCodes.NO_CONTENT).json({ message: 'Post successfully deleted' });
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
