@@ -75,7 +75,14 @@ const editBlogPost = async (id, postInfo, userInfo) => {
   return newPost.dataValues;
 };
 
-const deleteBlogPost = async (id) => {
+const deleteBlogPost = async (id, userInfo) => {
+  const post = await getBlogPostById(id);
+  const currentUser = userInfo.dataValues.id;
+  const postUser = post.user.id;
+  if (currentUser !== postUser) {
+    const error = { status: StatusCodes.UNAUTHORIZED, message: 'Unauthorized user' };
+    throw error;
+  }
   const blogPost = await BlogPost.destroy({ where: { id } });
   return blogPost;
 };
