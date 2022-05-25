@@ -1,6 +1,17 @@
 const { StatusCodes } = require('http-status-codes');
 const blogPostService = require('../services/blogPostService');
 
+const searchPost = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    const blogPost = await blogPostService.searchPost(q);
+    return res.status(StatusCodes.OK).json(blogPost);
+  } catch (error) {
+    console.log(`Error: ${error}`);
+    next(error);
+  }
+};
+
 const getBlogPosts = async (_req, res, next) => {
   try {
     const blogPost = await blogPostService.getBlogPosts();
@@ -59,6 +70,7 @@ const deleteBlogPost = async (req, res, next) => {
 };
 
 module.exports = {
+  searchPost,
   getBlogPosts,
   getBlogPostById,
   createBlogPost,
