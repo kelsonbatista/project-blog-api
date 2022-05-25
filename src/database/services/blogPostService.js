@@ -1,5 +1,22 @@
+const { Op } = require('sequelize');
 const { StatusCodes } = require('http-status-codes');
 const { BlogPost, Category, User } = require('../models');
+
+const searchPost = async (query) => {
+  const blogPost = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+    where: {
+      [Op.or]: {
+        title: { [Op.like]: `%${query}%` },
+        content: { [Op.like]: `%${query}%` },
+      },      
+    },
+  });
+  return blogPost;
+};
 
 const getBlogPosts = async () => {
   const blogPost = await BlogPost.findAll(
@@ -88,6 +105,7 @@ const deleteBlogPost = async (id, userInfo) => {
 };
 
 module.exports = {
+  searchPost,
   getBlogPosts,
   getBlogPostById,
   createBlogPost,
