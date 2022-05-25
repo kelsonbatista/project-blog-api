@@ -54,9 +54,9 @@ const editUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await userService.deleteUser(id);
-    return res.status(StatusCodes.OK).json(user);
+    const { id } = req.params.id === 'me' ? req.user.dataValues : req.params;
+    await userService.deleteUser(id);
+    return res.status(StatusCodes.NO_CONTENT).json({ message: 'User successfully deleted' });
   } catch (error) {
     console.log(`Error: ${error}`);
     next(error);
